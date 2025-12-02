@@ -1,24 +1,21 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
+<header class="bg-white shadow-sm sticky top-0 z-50 border-b border-[#DDE2EB]">
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
-        <a routerLink="/" class="flex-shrink-0 flex items-center gap-2">
-          <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" />
-          </svg>
-          <span class="font-bold text-xl text-gray-800">ReHome Sri Lanka</span>
+        <a routerLink="/" class="flex-shrink-0 flex items-center gap-3">
+          <img src="/logo.png" alt="ReHome SriLanka" class="h-10 w-auto">
         </a>
       </div>
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
-          <a routerLink="/" routerLinkActive="bg-indigo-50 text-indigo-700" [routerLinkActiveOptions]="{exact: true}" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-          <a routerLink="/apply-for-help" routerLinkActive="bg-indigo-50 text-indigo-700" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Apply for Help</a>
-          <a routerLink="/offer-support" routerLinkActive="bg-indigo-50 text-indigo-700" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Offer Support</a>
-          <a routerLink="/admin" routerLinkActive="bg-indigo-50 text-indigo-700" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+          <a routerLink="/" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" [routerLinkActiveOptions]="{exact: true}" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Home</a>
+          <a routerLink="/apply-for-help" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Apply for Help</a>
+          <a routerLink="/offer-support" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">Offer Support</a>
+          <a routerLink="/admin" routerLinkActive="bg-[#F7A800] text-[#222222]" class="bg-[#004B7A] hover:bg-[#003A5C] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-sm">Admin</a>
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">
-        <button (click)="toggleMobileMenu()" type="button" class="bg-gray-100 inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+        <button (click)="toggleMobileMenu()" type="button" class="bg-[#E4F0F7] inline-flex items-center justify-center p-2 rounded-md text-[#666666] hover:text-[#004B7A] hover:bg-[#E4F0F7] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#004B7A]" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main menu</span>
           @if (!isMobileMenuOpen()) {
             <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -36,10 +33,10 @@
     @if (isMobileMenuOpen()) {
       <div class="md:hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a routerLink="/" routerLinkActive="bg-indigo-50 text-indigo-700" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-          <a routerLink="/apply-for-help" routerLinkActive="bg-indigo-50 text-indigo-700" (click)="toggleMobileMenu()" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Apply for Help</a>
-          <a routerLink="/offer-support" routerLinkActive="bg-indigo-50 text-indigo-700" (click)="toggleMobileMenu()" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Offer Support</a>
-          <a routerLink="/admin" routerLinkActive="bg-indigo-50 text-indigo-700" (click)="toggleMobileMenu()" class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Admin</a>
+          <a routerLink="/" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Home</a>
+          <a routerLink="/apply-for-help" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" (click)="toggleMobileMenu()" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Apply for Help</a>
+          <a routerLink="/offer-support" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" (click)="toggleMobileMenu()" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Offer Support</a>
+          <a routerLink="/admin" routerLinkActive="bg-[#E4F0F7] text-[#004B7A]" (click)="toggleMobileMenu()" class="text-[#666666] hover:bg-[#E4F0F7] hover:text-[#004B7A] block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">Admin</a>
         </div>
       </div>
     }
