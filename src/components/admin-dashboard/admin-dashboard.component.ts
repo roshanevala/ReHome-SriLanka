@@ -36,6 +36,7 @@ export class AdminDashboardComponent implements OnInit {
 
   activeTab = signal<AdminTab>('overview');
   selectedApplication = signal<BeneficiaryApplication | null>(null);
+  selectedDonor = signal<any | null>(null);
   statistics = signal<Statistics>({
     totalBeneficiaries: 0,
     totalDonors: 0,
@@ -86,14 +87,25 @@ export class AdminDashboardComponent implements OnInit {
   changeTab(tab: AdminTab) {
     this.activeTab.set(tab);
     this.selectedApplication.set(null);
+    this.selectedDonor.set(null);
   }
 
   selectApplication(application: BeneficiaryApplication) {
     this.selectedApplication.set(application);
+    this.selectedDonor.set(null);
+  }
+
+  selectDonor(donor: any) {
+    this.selectedDonor.set(donor);
+    this.selectedApplication.set(null);
   }
 
   closeDetailView() {
     this.selectedApplication.set(null);
+  }
+
+  closeDonorView() {
+    this.selectedDonor.set(null);
   }
 
   async updateStatus(appId: string, status: string) {
@@ -112,6 +124,11 @@ export class AdminDashboardComponent implements OnInit {
 
   async rejectApplication(appId: string) {
     await this.updateStatus(appId, 'rejected');
+  }
+
+  getDocumentsByType(documents: any[], type: string): any[] {
+    if (!documents) return [];
+    return documents.filter(doc => doc.type === type);
   }
 
   getStatusColor(status: ApplicationStatus): string {

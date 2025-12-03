@@ -9,13 +9,11 @@ service cloud.firestore {
     }
     
     function isAdmin() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return isAuthenticated() && request.auth.token.admin == true;
     }
     
     function isVerifier() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'verifier';
+      return isAuthenticated() && request.auth.token.verifier == true;
     }
     
     function isOwner(userId) {
@@ -44,8 +42,8 @@ service cloud.firestore {
       allow get: if isAuthenticated() && 
                    resource.data.userId == request.auth.uid;
       
-      // Only admins and verifiers can update status
-      allow update: if (isAdmin() || isVerifier()) ||
+      // Admins and verifiers can update status
+      allow update: if isAdmin() || isVerifier() ||
                        (isOwner(resource.data.userId) && 
                         request.resource.data.status == resource.data.status);
       

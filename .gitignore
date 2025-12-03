@@ -55,3 +55,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Firebase Admin
+serviceAccountKey.json
+set-admin.js

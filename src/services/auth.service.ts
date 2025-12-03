@@ -23,9 +23,10 @@ export class AuthService {
   
   // Observable of current user
   user$: Observable<User | null> = new Observable((observer) => {
-    return onAuthStateChanged(this.auth, (user) => {
+    const unsubscribe = onAuthStateChanged(this.auth, (user) => {
       observer.next(user);
     });
+    return () => unsubscribe();
   });
 
   // Get current user
@@ -83,7 +84,8 @@ export class AuthService {
     const user = this.getCurrentUser();
     if (!user) return false;
     
-    const idTokenResult = await user.getIdTokenResult();
+    // Force token refresh to get latest claims
+    const idTokenResult = await user.getIdTokenResult(true);
     return !!idTokenResult.claims['admin'];
   }
 

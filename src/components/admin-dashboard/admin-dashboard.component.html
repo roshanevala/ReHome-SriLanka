@@ -121,12 +121,13 @@
                   <h2 class="text-xl font-semibold text-[#222222] mb-4">Registered Donors</h2>
                   <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
                     @for (donor of allDonors(); track donor.id) {
-                      <div class="p-4 rounded-lg bg-white border border-[#DDE2EB]">
+                      <div (click)="selectDonor(donor)" class="p-4 rounded-lg cursor-pointer transition-all duration-200 border" [class]="selectedDonor()?.id === donor.id ? 'bg-[#E4F0F7] border-[#004B7A] ring-2 ring-[#004B7A]' : 'bg-white border-[#DDE2EB] hover:border-[#004B7A]'">
                         <div class="flex justify-between items-center mb-1">
                           <p class="font-semibold text-[#222222]">{{ donor.name }}</p>
-                          <span class="text-xs font-medium px-2 py-1 rounded-full bg-green-100 text-green-800">{{ donor.status || 'active' }}</span>
+                          <span class="text-xs font-medium px-2 py-1 rounded-full bg-green-100 text-green-800">{{ donor.donorType }}</span>
                         </div>
-                        <p class="text-sm text-[#666666]">{{ donor.donorType }} from {{ donor.country }}</p>
+                        <p class="text-sm text-[#666666]">{{ donor.email }}</p>
+                        <p class="text-xs text-[#666666] mt-1">{{ donor.country }}</p>
                       </div>
                     } @empty {
                       <p class="text-[#666666] p-4">No registered donors.</p>
@@ -138,7 +139,122 @@
 
             <!-- Detail View -->
             <div class="lg:col-span-2">
-              @if (selectedApplication(); as app) {
+              @if (activeTab() === 'donors' && selectedDonor(); as donor) {
+                <div class="bg-white p-6 rounded-lg border border-[#DDE2EB]">
+                  <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-[#004B7A]">Donor Details</h2>
+                    <button (click)="closeDonorView()" class="text-[#666666] hover:text-[#222222]">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 class="text-sm font-medium text-[#666666] mb-1">Name</h3>
+                      <p class="text-lg font-semibold text-[#222222]">{{ donor.name }}</p>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-medium text-[#666666] mb-1">Donor Type</h3>
+                      <p class="text-[#222222]">{{ donor.donorType }}</p>
+                    </div>
+                    @if (donor.contactPerson) {
+                      <div>
+                        <h3 class="text-sm font-medium text-[#666666] mb-1">Contact Person</h3>
+                        <p class="text-[#222222]">{{ donor.contactPerson }}</p>
+                      </div>
+                    }
+                    <div>
+                      <h3 class="text-sm font-medium text-[#666666] mb-1">Email</h3>
+                      <p class="text-[#222222]">{{ donor.email }}</p>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-medium text-[#666666] mb-1">Phone</h3>
+                      <p class="text-[#222222]">{{ donor.phone }}</p>
+                    </div>
+                    <div>
+                      <h3 class="text-sm font-medium text-[#666666] mb-1">Country</h3>
+                      <p class="text-[#222222]">{{ donor.country }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Support Details -->
+                  <div class="mt-6 pt-6 border-t border-[#DDE2EB]">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4">Support Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="col-span-2">
+                        <h4 class="text-sm font-medium text-[#666666] mb-2">Types of Support</h4>
+                        <div class="flex flex-wrap gap-2">
+                          @if (donor.supportTypeFundFull) {
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Funding Full House</span>
+                          }
+                          @if (donor.supportTypeFundPart) {
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Funding Part of House</span>
+                          }
+                          @if (donor.supportTypeMaterials) {
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Providing Materials</span>
+                          }
+                          @if (donor.supportTypeLabour) {
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Providing Labour</span>
+                          }
+                          @if (donor.supportTypeLand) {
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Providing Land</span>
+                          }
+                        </div>
+                      </div>
+                      @if (donor.budget) {
+                        <div>
+                          <h4 class="text-sm font-medium text-[#666666] mb-1">Budget (LKR)</h4>
+                          <p class="text-[#222222] font-semibold text-lg">{{ donor.budget | number }}</p>
+                        </div>
+                      }
+                      @if (donor.preferredDistrict) {
+                        <div>
+                          <h4 class="text-sm font-medium text-[#666666] mb-1">Preferred District</h4>
+                          <p class="text-[#222222]">{{ donor.preferredDistrict }}</p>
+                        </div>
+                      }
+                      @if (donor.timeframe) {
+                        <div>
+                          <h4 class="text-sm font-medium text-[#666666] mb-1">Timeframe</h4>
+                          <p class="text-[#222222]">{{ donor.timeframe }}</p>
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <!-- Transparency Options -->
+                  <div class="mt-6 pt-6 border-t border-[#DDE2EB]">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4">Transparency Options</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666] mb-1">Display Name</h4>
+                        <p class="text-[#222222]">{{ donor.displayName ? 'Yes' : 'No' }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666] mb-1">Wants Updates</h4>
+                        <p class="text-[#222222]">{{ donor.wantsUpdates ? 'Yes' : 'No' }}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Registration Info -->
+                  <div class="mt-6 pt-6 border-t border-[#DDE2EB]">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4">Registration Info</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666] mb-1">Donor ID</h4>
+                        <p class="text-[#222222] text-xs font-mono">{{ donor.id }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666] mb-1">Registered On</h4>
+                        <p class="text-[#222222]">{{ donor.createdAt }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              } @else if (selectedApplication(); as app) {
                 <div class="bg-white p-6 rounded-lg border border-[#DDE2EB]">
                   <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold text-[#004B7A]">Application Details</h2>
@@ -149,34 +265,173 @@
                     </button>
                   </div>
 
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">Full Name</h3>
-                      <p class="text-lg font-semibold text-[#222222]">{{ app.fullName }}</p>
+                  <!-- Personal Information -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Personal Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Full Name</h4>
+                        <p class="text-[#222222]">{{ app.fullName }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">NIC</h4>
+                        <p class="text-[#222222]">{{ app.nic }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Phone</h4>
+                        <p class="text-[#222222]">{{ app.phone }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Email</h4>
+                        <p class="text-[#222222]">{{ app.email }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Status</h4>
+                        <span class="inline-block text-sm font-medium px-3 py-1 rounded-full" [ngClass]="{
+                          'bg-[#FFF8E6] text-[#F7A800]': app.status === 'pending',
+                          'bg-green-100 text-green-800': app.status === 'approved',
+                          'bg-red-100 text-red-800': app.status === 'rejected'
+                        }">{{ app.status }}</span>
+                      </div>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">Status</h3>
-                      <span class="inline-block text-sm font-medium px-3 py-1 rounded-full" [ngClass]="{
-                        'bg-[#FFF8E6] text-[#F7A800]': app.status === 'pending',
-                        'bg-green-100 text-green-800': app.status === 'approved',
-                        'bg-red-100 text-red-800': app.status === 'rejected'
-                      }">{{ app.status }}</span>
+                  </div>
+
+                  <!-- Address Information -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Address Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="col-span-2">
+                        <h4 class="text-sm font-medium text-[#666666]">Address Before Disaster</h4>
+                        <p class="text-[#222222]">{{ app.addressBefore }}</p>
+                      </div>
+                      <div class="col-span-2">
+                        <h4 class="text-sm font-medium text-[#666666]">Current Address</h4>
+                        <p class="text-[#222222]">{{ app.currentAddress }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">District</h4>
+                        <p class="text-[#222222]">{{ app.district }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">GN Division</h4>
+                        <p class="text-[#222222]">{{ app.gnDivision }}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">Phone</h3>
-                      <p class="text-[#222222]">{{ app.phone }}</p>
+                  </div>
+
+                  <!-- Disaster Information -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Disaster Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Disaster Type</h4>
+                        <p class="text-[#222222]">{{ app.disasterType }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Date of Disaster</h4>
+                        <p class="text-[#222222]">{{ app.disasterDate }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Damage Level</h4>
+                        <p class="text-[#222222]">{{ app.damageLevel }}</p>
+                      </div>
+                      <div class="col-span-2">
+                        <h4 class="text-sm font-medium text-[#666666]">Description</h4>
+                        <p class="text-[#222222]">{{ app.description }}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">District</h3>
-                      <p class="text-[#222222]">{{ app.district }}</p>
+                  </div>
+
+                  <!-- Family & Financial Information -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Family & Financial Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Family Members</h4>
+                        <p class="text-[#222222]">{{ app.familyMembers }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Family Composition</h4>
+                        <p class="text-[#222222]">{{ app.familyComposition }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Monthly Income</h4>
+                        <p class="text-[#222222]">{{ app.monthlyIncome }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Land Deed</h4>
+                        <p class="text-[#222222]">{{ app.hasLandDeed ? 'Yes' : 'No' }}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">Disaster Type</h3>
-                      <p class="text-[#222222]">{{ app.disasterType }}</p>
+                  </div>
+
+                  <!-- Document Images -->
+                  @if (app.documents?.length) {
+                    <div class="mb-6">
+                      <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Documents & Photos</h3>
+                      
+                      @if (getDocumentsByType(app.documents, 'damagePhotos').length) {
+                        <div class="mb-4">
+                          <h4 class="text-sm font-medium text-[#666666] mb-2">Damage Photos</h4>
+                          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            @for (doc of getDocumentsByType(app.documents, 'damagePhotos'); track doc.url) {
+                              <a [href]="doc.url" target="_blank" class="block border border-[#DDE2EB] rounded-lg overflow-hidden hover:ring-2 hover:ring-[#004B7A] transition-all">
+                                <img [src]="doc.url" alt="Damage photo" class="w-full h-32 object-cover">
+                              </a>
+                            }
+                          </div>
+                        </div>
+                      }
+
+                      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        @if (getDocumentsByType(app.documents, 'nic').length) {
+                          <div>
+                            <h4 class="text-sm font-medium text-[#666666] mb-2">NIC Photo</h4>
+                            <a [href]="getDocumentsByType(app.documents, 'nic')[0].url" target="_blank" class="block border border-[#DDE2EB] rounded-lg overflow-hidden hover:ring-2 hover:ring-[#004B7A] transition-all">
+                              <img [src]="getDocumentsByType(app.documents, 'nic')[0].url" alt="NIC" class="w-full h-32 object-cover">
+                            </a>
+                          </div>
+                        }
+
+                        @if (getDocumentsByType(app.documents, 'incomeProof').length) {
+                          <div>
+                            <h4 class="text-sm font-medium text-[#666666] mb-2">Income Proof</h4>
+                            <a [href]="getDocumentsByType(app.documents, 'incomeProof')[0].url" target="_blank" class="block border border-[#DDE2EB] rounded-lg p-4 hover:ring-2 hover:ring-[#004B7A] transition-all text-center">
+                              <svg class="w-12 h-12 mx-auto text-[#004B7A] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                              </svg>
+                              <p class="text-xs text-[#666666]">View Document</p>
+                            </a>
+                          </div>
+                        }
+
+                        @if (getDocumentsByType(app.documents, 'landDeed').length) {
+                          <div>
+                            <h4 class="text-sm font-medium text-[#666666] mb-2">Land Deed</h4>
+                            <a [href]="getDocumentsByType(app.documents, 'landDeed')[0].url" target="_blank" class="block border border-[#DDE2EB] rounded-lg p-4 hover:ring-2 hover:ring-[#004B7A] transition-all text-center">
+                              <svg class="w-12 h-12 mx-auto text-[#004B7A] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                              </svg>
+                              <p class="text-xs text-[#666666]">View Document</p>
+                            </a>
+                          </div>
+                        }
+                      </div>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-medium text-[#666666]">Family Members</h3>
-                      <p class="text-[#222222]">{{ app.familyMembers }}</p>
+                  }
+
+                  <!-- Application Metadata -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-[#004B7A] mb-4 pb-2 border-b border-[#DDE2EB]">Application Info</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Application ID</h4>
+                        <p class="text-[#222222] text-xs font-mono">{{ app.id }}</p>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-medium text-[#666666]">Submitted On</h4>
+                        <p class="text-[#222222]">{{ app.createdAt }}</p>
+                      </div>
                     </div>
                   </div>
 
