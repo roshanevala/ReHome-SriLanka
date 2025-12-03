@@ -1,5 +1,6 @@
 
-<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+<div class="min-h-screen bg-[#F6F7FB] py-8">
+  <div class="max-w-5xl mx-auto bg-white p-6 md:p-10 rounded-xl shadow-lg">
   @if (formStatus() === 'success') {
     <div class="text-center p-8">
       <svg class="w-16 h-16 mx-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -7,77 +8,77 @@
       <p class="text-gray-600 mt-2">Your registration has been received. Our team will get in touch with you shortly. You will be redirected to the home page.</p>
     </div>
   } @else {
-    <h1 class="text-3xl font-bold text-gray-800 mb-2">Donor Registration Form</h1>
-    <p class="text-gray-600 mb-8">Thank you for your interest in helping. Please provide your details below.</p>
+    <h1 class="text-3xl font-bold text-[#222222] mb-2">Donor Registration Form</h1>
+    <p class="text-[#666666] mb-8">Thank you for your interest in helping. Please provide your details below.</p>
   
     <form [formGroup]="donorForm" (ngSubmit)="onSubmit()" novalidate>
       <!-- Basic Info -->
-      <fieldset class="mb-8 border-t pt-6">
-        <legend class="text-xl font-semibold text-green-700 mb-4">1. Your Information</legend>
+      <fieldset class="mb-6 border border-[#DDE2EB] rounded-lg p-6 bg-[#FAFBFC]">
+        <legend class="text-xl font-semibold text-[#004B7A] mb-4 px-2">1. Your Information</legend>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label class="block text-sm font-medium text-gray-700">I am an</label>
-            <div class="mt-2 flex gap-4">
+            <label class="block text-sm font-medium text-[#222222] mb-3">I am an</label>
+            <div class="flex gap-6 bg-[#F6F7FB] p-4 rounded-md border border-[#DDE2EB]">
               <div class="flex items-center">
-                <input id="individual" formControlName="donorType" type="radio" value="Individual" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                <label for="individual" class="ml-2 block text-sm font-medium text-gray-700">Individual</label>
+                <input id="individual" formControlName="donorType" type="radio" value="Individual" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]">
+                <label for="individual" class="ml-2 block text-base font-medium text-[#222222]">Individual</label>
               </div>
               <div class="flex items-center">
-                <input id="organisation" formControlName="donorType" type="radio" value="Organisation" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500">
-                <label for="organisation" class="ml-2 block text-sm font-medium text-gray-700">Organisation</label>
+                <input id="organisation" formControlName="donorType" type="radio" value="Organisation" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]">
+                <label for="organisation" class="ml-2 block text-base font-medium text-[#222222]">Organisation</label>
               </div>
             </div>
           </div>
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Name / Organisation Name</label>
-            <input type="text" id="name" formControlName="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" [class.border-red-500]="isInvalid('name')">
+            <label for="name" class="block text-sm font-medium text-[#222222] mb-2">Name / Organisation Name</label>
+            <input type="text" id="name" formControlName="name" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('name')">
           </div>
           @if (donorForm.get('donorType')?.value === 'Organisation') {
             <div>
-              <label for="contactPerson" class="block text-sm font-medium text-gray-700">Contact Person</label>
-              <input type="text" id="contactPerson" formControlName="contactPerson" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" [class.border-red-500]="isInvalid('contactPerson')">
+              <label for="contactPerson" class="block text-sm font-medium text-[#222222] mb-2">Contact Person</label>
+              <input type="text" id="contactPerson" formControlName="contactPerson" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('contactPerson')">
             </div>
           }
           <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700">Phone / WhatsApp</label>
-            <input type="tel" id="phone" formControlName="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" [class.border-red-500]="isInvalid('phone')">
+            <label for="phone" class="block text-sm font-medium text-[#222222] mb-2">Phone / WhatsApp</label>
+            <input type="tel" id="phone" formControlName="phone" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('phone')">
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-            <input type="email" id="email" formControlName="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" [class.border-red-500]="isInvalid('email')">
+            <label for="email" class="block text-sm font-medium text-[#222222] mb-2">Email Address</label>
+            <input type="email" id="email" formControlName="email" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('email')">
           </div>
           <div>
-            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-            <input type="text" id="country" formControlName="country" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" [class.border-red-500]="isInvalid('country')">
+            <label for="country" class="block text-sm font-medium text-[#222222] mb-2">Country</label>
+            <input type="text" id="country" formControlName="country" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('country')">
           </div>
         </div>
       </fieldset>
   
       <!-- Support Details -->
-      <fieldset class="mb-8 border-t pt-6">
-        <legend class="text-xl font-semibold text-green-700 mb-4">2. Type of Support</legend>
+      <fieldset class="mb-6 border border-[#DDE2EB] rounded-lg p-6 bg-[#FAFBFC]">
+        <legend class="text-xl font-semibold text-[#004B7A] mb-4 px-2">2. Type of Support</legend>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700">I can help by:</label>
-            <div class="mt-2 grid grid-cols-2 gap-4">
-                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-full-house" formControlName="supportTypeFundFull" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"></div><div class="ml-3 text-sm"><label for="st-full-house" class="font-medium text-gray-700">Funding a full house</label></div></div>
-                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-part-house" formControlName="supportTypeFundPart" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"></div><div class="ml-3 text-sm"><label for="st-part-house" class="font-medium text-gray-700">Funding part of a house</label></div></div>
-                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-materials" formControlName="supportTypeMaterials" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"></div><div class="ml-3 text-sm"><label for="st-materials" class="font-medium text-gray-700">Providing materials</label></div></div>
-                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-labour" formControlName="supportTypeLabour" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"></div><div class="ml-3 text-sm"><label for="st-labour" class="font-medium text-gray-700">Providing labour</label></div></div>
-                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-land" formControlName="supportTypeLand" type="checkbox" class="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"></div><div class="ml-3 text-sm"><label for="st-land" class="font-medium text-gray-700">Providing land</label></div></div>
+            <label class="block text-sm font-medium text-[#222222] mb-3">I can help by:</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#F6F7FB] p-4 rounded-md border border-[#DDE2EB]">
+                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-full-house" formControlName="supportTypeFundFull" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-full-house" class="font-medium text-[#222222]">Funding a full house</label></div></div>
+                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-part-house" formControlName="supportTypeFundPart" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-part-house" class="font-medium text-[#222222]">Funding part of a house</label></div></div>
+                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-materials" formControlName="supportTypeMaterials" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-materials" class="font-medium text-[#222222]">Providing materials</label></div></div>
+                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-labour" formControlName="supportTypeLabour" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-labour" class="font-medium text-[#222222]">Providing labour</label></div></div>
+                <div class="flex items-start"><div class="flex items-center h-5"><input id="st-land" formControlName="supportTypeLand" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-land" class="font-medium text-[#222222]">Providing land</label></div></div>
             </div>
           </div>
           <div>
-            <label for="budget" class="block text-sm font-medium text-gray-700">Total Amount to Commit (LKR)</label>
-            <input type="number" id="budget" formControlName="budget" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
+            <label for="budget" class="block text-sm font-medium text-[#222222] mb-2">Total Amount to Commit (LKR)</label>
+            <input type="number" id="budget" formControlName="budget" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base">
           </div>
           <div>
-            <label for="preferredDistrict" class="block text-sm font-medium text-gray-700">Preferred District / Area</label>
-            <input type="text" id="preferredDistrict" formControlName="preferredDistrict" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
+            <label for="preferredDistrict" class="block text-sm font-medium text-[#222222] mb-2">Preferred District / Area</label>
+            <input type="text" id="preferredDistrict" formControlName="preferredDistrict" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base">
           </div>
           <div>
-            <label for="timeframe" class="block text-sm font-medium text-gray-700">Timeframe to Start</label>
-            <select id="timeframe" formControlName="timeframe" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm">
+            <label for="timeframe" class="block text-sm font-medium text-[#222222] mb-2">Timeframe to Start</label>
+            <select id="timeframe" formControlName="timeframe" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base">
                 <option>Immediately</option>
                 <option>1-3 months</option>
                 <option>3-6 months</option>
@@ -88,21 +89,21 @@
       </fieldset>
       
       <!-- Transparency -->
-      <fieldset class="border-t pt-6">
-        <legend class="text-xl font-semibold text-green-700 mb-4">3. Transparency Options</legend>
-        <div class="space-y-4">
+      <fieldset class="border border-[#DDE2EB] rounded-lg p-6 bg-[#FAFBFC]">
+        <legend class="text-xl font-semibold text-[#004B7A] mb-4 px-2">3. Transparency Options</legend>
+        <div class="space-y-5">
           <div>
-            <label class="block text-sm font-medium text-gray-700">Can your name be displayed to beneficiaries?</label>
-            <div class="mt-2 flex gap-4">
-              <div class="flex items-center"><input id="display-yes" formControlName="displayName" type="radio" [value]="true" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500"><label for="display-yes" class="ml-2">Yes</label></div>
-              <div class="flex items-center"><input id="display-no" formControlName="displayName" type="radio" [value]="false" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500"><label for="display-no" class="ml-2">No</label></div>
+            <label class="block text-sm font-medium text-[#222222] mb-3">Can your name be displayed to beneficiaries?</label>
+            <div class="flex gap-6 bg-[#F6F7FB] p-4 rounded-md border border-[#DDE2EB]">
+              <div class="flex items-center"><input id="display-yes" formControlName="displayName" type="radio" [value]="true" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]"><label for="display-yes" class="ml-2 text-base font-medium text-[#222222]">Yes</label></div>
+              <div class="flex items-center"><input id="display-no" formControlName="displayName" type="radio" [value]="false" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]"><label for="display-no" class="ml-2 text-base font-medium text-[#222222]">No</label></div>
             </div>
           </div>
            <div>
-            <label class="block text-sm font-medium text-gray-700">Do you want regular photo/video updates?</label>
-            <div class="mt-2 flex gap-4">
-              <div class="flex items-center"><input id="updates-yes" formControlName="wantsUpdates" type="radio" [value]="true" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500"><label for="updates-yes" class="ml-2">Yes</label></div>
-              <div class="flex items-center"><input id="updates-no" formControlName="wantsUpdates" type="radio" [value]="false" class="h-4 w-4 text-green-600 border-gray-300 focus:ring-green-500"><label for="updates-no" class="ml-2">No</label></div>
+            <label class="block text-sm font-medium text-[#222222] mb-3">Do you want regular photo/video updates?</label>
+            <div class="flex gap-6 bg-[#F6F7FB] p-4 rounded-md border border-[#DDE2EB]">
+              <div class="flex items-center"><input id="updates-yes" formControlName="wantsUpdates" type="radio" [value]="true" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]"><label for="updates-yes" class="ml-2 text-base font-medium text-[#222222]">Yes</label></div>
+              <div class="flex items-center"><input id="updates-no" formControlName="wantsUpdates" type="radio" [value]="false" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] focus:ring-[#004B7A]"><label for="updates-no" class="ml-2 text-base font-medium text-[#222222]">No</label></div>
             </div>
           </div>
         </div>
@@ -110,7 +111,7 @@
   
       <!-- Submission -->
       <div class="mt-10 text-right">
-        <button type="submit" [disabled]="formStatus() === 'submitting' || donorForm.invalid" class="inline-flex justify-center py-3 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed">
+        <button type="submit" [disabled]="formStatus() === 'submitting' || donorForm.invalid" class="inline-flex justify-center py-3 px-8 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F7A800] hover:bg-[#E09700] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F7A800] disabled:bg-gray-400 disabled:cursor-not-allowed">
           @if (formStatus() === 'submitting') {
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -124,4 +125,5 @@
       </div>
     </form>
   }
+  </div>
 </div>

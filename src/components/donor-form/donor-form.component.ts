@@ -1,22 +1,26 @@
 
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DataService } from '../../services/firebase-data.service';
+import { AuthService } from '../../services/auth.service';
 import { SupportType } from '../../models/models';
 
 @Component({
   selector: 'app-donor-form',
   templateUrl: './donor-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class DonorFormComponent {
   private fb = inject(FormBuilder);
   private dataService = inject(DataService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
-  formStatus = signal<'idle' | 'submitting' | 'success'>('idle');
+  formStatus = signal<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  errorMessage = signal<string>('');
 
   supportTypes: SupportType[] = ['Fund Full House', 'Fund Part of House', 'Provide Materials', 'Provide Labour', 'Provide Land'];
 
@@ -51,40 +55,58 @@ export class DonorFormComponent {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.donorForm.invalid) {
       this.donorForm.markAllAsTouched();
       return;
     }
 
-    this.formStatus.set('submitting');
-    
-    setTimeout(() => {
-      const formValue = this.donorForm.value;
-      const selectedSupportTypes: SupportType[] = [];
-      if (formValue.supportTypeFundFull) selectedSupportTypes.push('Fund Full House');
-      if (formValue.supportTypeFundPart) selectedSupportTypes.push('Fund Part of House');
-      if (formValue.supportTypeMaterials) selectedSupportTypes.push('Provide Materials');
-      if (formValue.supportTypeLabour) selectedSupportTypes.push('Provide Labour');
-      if (formValue.supportTypeLand) selectedSupportTypes.push('Provide Land');
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.errorMessage.set('You must be logged in to register as a donor');
+      this.formStatus.set('error');
+      return;
+    }
 
-      this.dataService.addDonor({
-        donorType: formValue.donorType as 'Individual' | 'Organisation',
-        name: formValue.name!,
-        contactPerson: formValue.contactPerson!,
-        phone: formValue.phone!,
-        email: formValue.email!,
-        country: formValue.country!,
-        supportType: selectedSupportTypes,
-        budget: formValue.budget!,
-        preferredDistrict: formValue.preferredDistrict!,
-        timeframe: formValue.timeframe!,
-        displayName: formValue.displayName!,
-        wantsUpdates: formValue.wantsUpdates!,
+    this.formStatus.set('submitting');
+
+    try {
+      // Build support types array from checkboxes
+      const supportTypes: string[] = [];
+      if (this.donorForm.value.supportTypeFundFull) supportTypes.push('Fund Full House');
+      if (this.donorForm.value.supportTypeFundPart) supportTypes.push('Fund Part of House');
+      if (this.donorForm.value.supportTypeMaterials) supportTypes.push('Provide Materials');
+      if (this.donorForm.value.supportTypeLabour) supportTypes.push('Provide Labour');
+      if (this.donorForm.value.supportTypeLand) supportTypes.push('Provide Land');
+
+      // Create donor record in Firestore
+      await this.dataService.createDonor({
+        userId: user.uid,
+        userEmail: user.email,
+        donorType: this.donorForm.value.donorType,
+        name: this.donorForm.value.name,
+        contactPerson: this.donorForm.value.contactPerson || null,
+        phone: this.donorForm.value.phone,
+        email: this.donorForm.value.email,
+        country: this.donorForm.value.country,
+        supportTypes,
+        budget: this.donorForm.value.budget || 0,
+        preferredDistrict: this.donorForm.value.preferredDistrict,
+        timeframe: this.donorForm.value.timeframe,
+        displayName: this.donorForm.value.displayName,
+        wantsUpdates: this.donorForm.value.wantsUpdates,
+        status: 'active',
+        createdAt: new Date().toISOString()
       });
+
       this.formStatus.set('success');
       setTimeout(() => this.router.navigate(['/']), 3000);
-    }, 1500);
+
+    } catch (error: any) {
+      console.error('Error registering donor:', error);
+      this.errorMessage.set(error.message || 'Failed to register. Please try again.');
+      this.formStatus.set('error');
+    }
   }
 
   isInvalid(controlName: string): boolean {

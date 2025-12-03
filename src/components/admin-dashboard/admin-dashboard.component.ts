@@ -1,27 +1,87 @@
 
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { DataService } from '../../services/data.service';
-import { BeneficiaryApplication, ApplicationStatus } from '../../models/models';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DataService } from '../../services/firebase-data.service';
+import { where, orderBy } from '@angular/fire/firestore';
+import { ApplicationStatus } from '../../models/models';
 
-type AdminTab = 'pending' | 'approved' | 'donors' | 'rejected';
+interface BeneficiaryApplication {
+  id?: string;
+  fullName: string;
+  status: string;
+  district: string;
+  disasterType: string;
+  createdAt: string;
+  [key: string]: any;
+}
+
+interface Statistics {
+  totalBeneficiaries: number;
+  totalDonors: number;
+  totalPledges: number;
+  pendingApplications: number;
+  approvedApplications: number;
+}
+
+type AdminTab = 'overview' | 'pending' | 'approved' | 'rejected' | 'donors';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule]
 })
-export class AdminDashboardComponent {
-  dataService = inject(DataService);
+export class AdminDashboardComponent implements OnInit {
+  private dataService = inject(DataService);
 
-  activeTab = signal<AdminTab>('pending');
+  activeTab = signal<AdminTab>('overview');
   selectedApplication = signal<BeneficiaryApplication | null>(null);
+  statistics = signal<Statistics>({
+    totalBeneficiaries: 0,
+    totalDonors: 0,
+    totalPledges: 0,
+    pendingApplications: 0,
+    approvedApplications: 0
+  });
 
-  allApplications = this.dataService.beneficiaryApplications;
-  allDonors = this.dataService.donors;
+  allApplications = signal<BeneficiaryApplication[]>([]);
+  pendingApplications = signal<BeneficiaryApplication[]>([]);
+  approvedApplications = signal<BeneficiaryApplication[]>([]);
+  rejectedApplications = signal<BeneficiaryApplication[]>([]);
+  allDonors = signal<any[]>([]);
   
-  pendingApplications = computed(() => this.allApplications().filter(a => a.status === 'Pending' || a.status === 'Under Verification'));
-  approvedApplications = computed(() => this.allApplications().filter(a => a.status === 'Approved' || a.status === 'House In Progress' || a.status === 'Completed'));
-  rejectedApplications = computed(() => this.allApplications().filter(a => a.status === 'Rejected'));
+  isLoading = signal(false);
+
+  async ngOnInit() {
+    await this.loadData();
+  }
+
+  async loadData() {
+    this.isLoading.set(true);
+    try {
+      // Load statistics
+      const stats = await this.dataService.getStatistics();
+      this.statistics.set(stats);
+
+      // Load all applications
+      const applications = await this.dataService.getAll<BeneficiaryApplication>('beneficiaries');
+      this.allApplications.set(applications);
+
+      // Filter by status
+      this.pendingApplications.set(applications.filter(a => a.status === 'pending'));
+      this.approvedApplications.set(applications.filter(a => a.status === 'approved'));
+      this.rejectedApplications.set(applications.filter(a => a.status === 'rejected'));
+
+      // Load donors
+      const donors = await this.dataService.getAll('donors');
+      this.allDonors.set(donors);
+
+    } catch (error) {
+      console.error('Error loading admin data:', error);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
 
   changeTab(tab: AdminTab) {
     this.activeTab.set(tab);
@@ -36,14 +96,22 @@ export class AdminDashboardComponent {
     this.selectedApplication.set(null);
   }
 
-  updateStatus(appId: string, status: ApplicationStatus) {
-    this.dataService.updateApplicationStatus(appId, status);
-    if (status === 'Approved' || status === 'Rejected') {
-        this.selectedApplication.set(null); // Close detail view after action
-    } else {
-        // Optimistically update the selected application's status
-        this.selectedApplication.update(app => app ? {...app, status: status} : null);
+  async updateStatus(appId: string, status: string) {
+    try {
+      await this.dataService.updateApplicationStatus(appId, status);
+      await this.loadData(); // Reload data
+      this.selectedApplication.set(null);
+    } catch (error) {
+      console.error('Error updating status:', error);
     }
+  }
+
+  async approveApplication(appId: string) {
+    await this.updateStatus(appId, 'approved');
+  }
+
+  async rejectApplication(appId: string) {
+    await this.updateStatus(appId, 'rejected');
   }
 
   getStatusColor(status: ApplicationStatus): string {
