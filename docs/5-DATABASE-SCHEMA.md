@@ -2,7 +2,7 @@
 
 ## Database Overview
 
-This document defines the database structure for the ReHome Sri Lanka system using **Firebase Cloud Firestore** (NoSQL).
+This document defines the database structure for the ReBuild Homes SriLanka system using **Firebase Cloud Firestore** (NoSQL).
 
 ---
 

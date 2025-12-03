@@ -1,7 +1,7 @@
 # Security & Privacy Guidelines
 
 ## Overview
-This document outlines security measures and privacy protections for the ReHome Sri Lanka system.
+This document outlines security measures and privacy protections for the ReBuild Homes SriLanka system.
 
 ---
 
@@ -254,7 +254,7 @@ async function deleteUserAccount(userId: string, reason: string) {
 - Remove EXIF data (GPS, camera info)
 - Blur faces if beneficiary requests
 - Reduce resolution if too high
-- Watermark with "ReHome Sri Lanka - Confidential"
+- Watermark with "ReBuild Homes SriLanka - Confidential"
 
 #### Implementation
 ```typescript
@@ -276,7 +276,7 @@ async function processPhoto(file: File): Promise<ProcessedPhoto> {
   });
   
   // Add watermark
-  const watermarked = await addWatermark(resized, 'ReHome Sri Lanka');
+  const watermarked = await addWatermark(resized, 'ReBuild Homes SriLanka');
   
   // Encrypt before storage
   const encrypted = await encryptFile(watermarked);
@@ -585,7 +585,7 @@ function escapeHTML(str: string): string {
 
 ### Reporting Security Issues
 
-**Email**: security@rehome-srilanka.org
+**Email**: security@rebuildhomes-srilanka.org
 
 **What to Include**:
 - Description of the vulnerability

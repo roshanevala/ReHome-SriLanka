@@ -1,4 +1,4 @@
-# ReHome Sri Lanka - Project Overview
+# ReBuild Homes SriLanka - Project Overview
 
 ## Vision
 Connect people who lost their homes in disasters with donors who want to help rebuild, through a transparent, verified, and trusted process.

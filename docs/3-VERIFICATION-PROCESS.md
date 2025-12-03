@@ -92,7 +92,7 @@ The verification process is critical to prevent fraud and ensure only genuine ca
 - Local NGO partners
 - Religious organization representatives
 - Trusted local volunteers
-- ReHome field team
+- ReBuild Homes field team
 
 **Field Visit Process**:
 1. **Pre-Visit**:

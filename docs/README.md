@@ -1,6 +1,6 @@
-# ReHome Sri Lanka - Documentation Index
+# ReBuild Homes SriLanka - Documentation Index
 
-Welcome to the ReHome Sri Lanka documentation. This comprehensive guide covers all aspects of the platform that connects disaster-affected families with donors who want to help rebuild homes.
+Welcome to the ReBuild Homes SriLanka documentation. This comprehensive guide covers all aspects of the platform that connects disaster-affected families with donors who want to help rebuild homes.
 
 **🔥 Built with Firebase** - This project uses Firebase for authentication, database, storage, and hosting.
 
@@ -248,7 +248,7 @@ Families scored 0-100 based on:
 ### Development Team
 - **Technical Lead**: [Email]
 - **Project Manager**: [Email]
-- **Security**: security@rehome-srilanka.org
+- **Security**: security@rebuildhomes-srilanka.org
 
 ### Documentation Updates
 - Located in `/docs` folder
@@ -256,7 +256,7 @@ Families scored 0-100 based on:
 - Version controlled in Git
 
 ### Reporting Issues
-- Security issues: security@rehome-srilanka.org
+- Security issues: security@rebuildhomes-srilanka.org
 - Bug reports: GitHub Issues
 - Feature requests: GitHub Discussions
 
@@ -286,8 +286,8 @@ Families scored 0-100 based on:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ReHome-SriLanka.git
-   cd ReHome-SriLanka
+   git clone https://github.com/yourusername/ReBuild-Homes-SriLanka.git
+   cd ReBuild-Homes-SriLanka
    ```
 
 2. **Read the documentation**
@@ -308,7 +308,7 @@ Families scored 0-100 based on:
 
 ## 📄 License & Usage
 
-This documentation is part of the ReHome Sri Lanka project.
+This documentation is part of the ReBuild Homes SriLanka project.
 
 **Purpose**: Help rebuild homes for disaster-affected families in Sri Lanka
 

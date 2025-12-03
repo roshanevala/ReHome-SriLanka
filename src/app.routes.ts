@@ -5,9 +5,9 @@ import { DonorFormComponent } from './components/donor-form/donor-form.component
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 export const APP_ROUTES: Routes = [
-  { path: '', component: HomeComponent, title: 'ReHome Sri Lanka - Home' },
-  { path: 'apply-for-help', component: BeneficiaryFormComponent, title: 'ReHome Sri Lanka - Beneficiary Application' },
-  { path: 'offer-support', component: DonorFormComponent, title: 'ReHome Sri Lanka - Donor Registration' },
-  { path: 'admin', component: AdminDashboardComponent, title: 'ReHome Sri Lanka - Admin Dashboard' },
+  { path: '', component: HomeComponent, title: 'ReBuild Homes SriLanka - Home' },
+  { path: 'apply-for-help', component: BeneficiaryFormComponent, title: 'ReBuild Homes SriLanka - Beneficiary Application' },
+  { path: 'offer-support', component: DonorFormComponent, title: 'ReBuild Homes SriLanka - Donor Registration' },
+  { path: 'admin', component: AdminDashboardComponent, title: 'ReBuild Homes SriLanka - Admin Dashboard' },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

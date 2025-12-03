@@ -1,7 +1,7 @@
 # Firebase SDK Integration Guide
 
 ## Overview
-This document shows how to interact with Firebase services for the ReHome Sri Lanka system.
+This document shows how to interact with Firebase services for the ReBuild Homes SriLanka system.
 
 **Technology**: Firebase SDK (AngularFire)
 

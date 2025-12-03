@@ -1,7 +1,7 @@
 # Implementation Roadmap
 
 ## Overview
-This document provides a phased approach to building the ReHome Sri Lanka system, from MVP to full production.
+This document provides a phased approach to building the ReBuild Homes SriLanka system, from MVP to full production.
 
 ---
 

@@ -1,7 +1,7 @@
 # Firebase Setup Guide
 
 ## Overview
-This guide covers setting up Firebase for the ReHome Sri Lanka project, including database structure, security rules, and configuration.
+This guide covers setting up Firebase for the ReBuild Homes SriLanka project, including database structure, security rules, and configuration.
 
 ---
 
@@ -10,7 +10,7 @@ This guide covers setting up Firebase for the ReHome Sri Lanka project, includin
 ### Create Firebase Project
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Click "Add project"
-3. Name: "ReHome Sri Lanka"
+3. Name: "ReBuild Homes SriLanka"
 4. Enable Google Analytics (optional)
 5. Create project
 
@@ -801,7 +801,7 @@ export const sendDailyDigest = functions.pubsub
     
     for (const admin of admins.docs) {
       await sendEmail(admin.data().email, {
-        subject: 'Daily ReHome Digest',
+        subject: 'Daily ReBuild Homes Digest',
         body: `
           New applications: ${newApplications.size}
           Approved applications: ${approvedApplications.size}
@@ -1037,7 +1037,7 @@ let testEnv;
 
 beforeAll(async () => {
   testEnv = await initializeTestEnvironment({
-    projectId: 'rehome-test',
+    projectId: 'rebuildhomes-test',
     firestore: {
       rules: fs.readFileSync('firestore.rules', 'utf8')
     }
@@ -1103,7 +1103,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
           channelId: live
-          projectId: rehome-srilanka
+          projectId: rebuildhomes-srilanka
 ```
 
 ---

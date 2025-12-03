@@ -1,7 +1,7 @@
 # User Roles & Permissions
 
 ## Overview
-This document defines the different user roles in the ReHome Sri Lanka system and their respective permissions.
+This document defines the different user roles in the ReBuild Homes SriLanka system and their respective permissions.
 
 ---
 
