@@ -11,6 +11,17 @@
     <h1 class="text-3xl font-bold text-[#222222] mb-2">Beneficiary Application Form</h1>
     <p class="text-[#666666] mb-8">Please fill out this form with accurate details to apply for housing assistance.</p>
   
+    @if (errorMessage()) {
+      <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+        <div class="flex">
+          <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <p class="ml-3 text-sm text-red-700">{{ errorMessage() }}</p>
+        </div>
+      </div>
+    }
+
     <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" novalidate>
       <!-- Basic Info -->
       <fieldset class="mb-6 border border-[#DDE2EB] rounded-lg p-6 bg-[#FAFBFC]">
@@ -115,24 +126,130 @@
       <fieldset class="mb-6 border border-[#DDE2EB] rounded-lg p-6 bg-[#FAFBFC]">
         <legend class="text-xl font-semibold text-[#004B7A] mb-4 px-2">4. Evidence & Consent</legend>
         <div class="space-y-6">
+          <!-- Damage Photos Upload -->
           <div>
-            <label class="block text-sm font-medium text-[#222222]">Evidence of Damage</label>
-            <p class="text-sm text-[#666666]">Please upload photos of the damage and any letters from authorities (GN, DMC). This is a placeholder for a file upload feature.</p>
-            <div class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-[#DDE2EB] border-dashed rounded-md">
-              <div class="space-y-1 text-center">
-                <svg class="mx-auto h-12 w-12 text-[#666666]" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                <div class="flex text-sm text-[#666666]"><p class="pl-1">File upload not implemented in this demo</p></div>
-              </div>
+            <label class="block text-sm font-medium text-[#222222] mb-2">Photos of Damage (Multiple allowed)</label>
+            <p class="text-sm text-[#666666] mb-3">Upload clear photos showing the extent of damage to your home.</p>
+            <div class="relative">
+              <input 
+                type="file" 
+                id="damagePhotos" 
+                (change)="onFileSelect($event, 'damagePhotos')" 
+                accept="image/*" 
+                multiple
+                class="hidden">
+              <label 
+                for="damagePhotos" 
+                class="flex items-center justify-center px-6 py-4 border-2 border-[#DDE2EB] border-dashed rounded-md cursor-pointer hover:border-[#004B7A] transition-colors bg-white">
+                <div class="text-center">
+                  <svg class="mx-auto h-10 w-10 text-[#666666]" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                  <p class="mt-2 text-sm text-[#004B7A] font-medium">Click to upload damage photos</p>
+                  <p class="text-xs text-[#666666]">PNG, JPG up to 10MB each</p>
+                </div>
+              </label>
+              @if (selectedFiles().damagePhotos.length > 0) {
+                <div class="mt-3 space-y-2">
+                  @for (file of selectedFiles().damagePhotos; track file.name) {
+                    <div class="flex items-center justify-between p-2 bg-[#E4F0F7] rounded text-sm">
+                      <span class="text-[#222222] truncate">{{ file.name }}</span>
+                      <span class="text-[#666666] text-xs ml-2">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</span>
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
 
+          <!-- NIC Document Upload -->
+          <div>
+            <label class="block text-sm font-medium text-[#222222] mb-2">National Identity Card (NIC)</label>
+            <div class="relative">
+              <input 
+                type="file" 
+                id="nicFile" 
+                (change)="onFileSelect($event, 'nic')" 
+                accept="image/*,.pdf"
+                class="hidden">
+              <label 
+                for="nicFile" 
+                class="flex items-center justify-between px-4 py-3 border border-[#DDE2EB] rounded-md cursor-pointer hover:border-[#004B7A] transition-colors bg-white">
+                <span class="text-sm text-[#666666]">
+                  @if (selectedFiles().nic) {
+                    {{ selectedFiles().nic!.name }}
+                  } @else {
+                    Choose file...
+                  }
+                </span>
+                <svg class="h-5 w-5 text-[#004B7A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+              </label>
+            </div>
+          </div>
+
+          <!-- Income Proof Upload -->
+          <div>
+            <label class="block text-sm font-medium text-[#222222] mb-2">Proof of Income (Optional)</label>
+            <p class="text-xs text-[#666666] mb-2">Salary slip, bank statement, or income certificate</p>
+            <div class="relative">
+              <input 
+                type="file" 
+                id="incomeProofFile" 
+                (change)="onFileSelect($event, 'incomeProof')" 
+                accept="image/*,.pdf"
+                class="hidden">
+              <label 
+                for="incomeProofFile" 
+                class="flex items-center justify-between px-4 py-3 border border-[#DDE2EB] rounded-md cursor-pointer hover:border-[#004B7A] transition-colors bg-white">
+                <span class="text-sm text-[#666666]">
+                  @if (selectedFiles().incomeProof) {
+                    {{ selectedFiles().incomeProof!.name }}
+                  } @else {
+                    Choose file...
+                  }
+                </span>
+                <svg class="h-5 w-5 text-[#004B7A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+              </label>
+            </div>
+          </div>
+
+          <!-- Land Deed Checkbox and Upload -->
           <div class="relative flex items-start">
             <div class="flex items-center h-5">
               <input id="hasLandDeed" formControlName="hasLandDeed" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]">
             </div>
-            <div class="ml-3 text-sm">
+            <div class="ml-3 w-full">
               <label for="hasLandDeed" class="font-medium text-[#222222]">I have land ownership proof (Deed / Permit)</label>
-              <p class="text-[#666666]">If not, our team can help with verification.</p>
+              <p class="text-[#666666] text-sm mb-2">If not, our team can help with verification.</p>
+              
+              @if (applicationForm.get('hasLandDeed')?.value) {
+                <div class="mt-3 relative">
+                  <input 
+                    type="file" 
+                    id="landDeedFile" 
+                    (change)="onFileSelect($event, 'landDeed')" 
+                    accept="image/*,.pdf"
+                    class="hidden">
+                  <label 
+                    for="landDeedFile" 
+                    class="flex items-center justify-between px-4 py-3 border border-[#DDE2EB] rounded-md cursor-pointer hover:border-[#004B7A] transition-colors bg-white">
+                    <span class="text-sm text-[#666666]">
+                      @if (selectedFiles().landDeed) {
+                        {{ selectedFiles().landDeed!.name }}
+                      } @else {
+                        Upload land deed document...
+                      }
+                    </span>
+                    <svg class="h-5 w-5 text-[#004B7A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                  </label>
+                </div>
+              }
             </div>
           </div>
           
