@@ -1,0 +1,77 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated();
+      // Note: In production, check custom claims or Firestore for admin role
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidImageOrPDF() {
+      return request.resource.contentType.matches('image/.*') || 
+             request.resource.contentType == 'application/pdf';
+    }
+    
+    function isUnder10MB() {
+      return request.resource.size < 10 * 1024 * 1024;
+    }
+    
+    // Beneficiary documents
+    match /beneficiaries/{beneficiaryId}/{allPaths=**} {
+      // Allow authenticated users to upload their own documents
+      allow read: if isAuthenticated();
+      
+      allow write: if isAuthenticated() && 
+                     isValidImageOrPDF() && 
+                     isUnder10MB();
+      
+      // Allow delete only for admins
+      allow delete: if isAdmin();
+    }
+    
+    // Donor documents
+    match /donors/{donorId}/{allPaths=**} {
+      allow read: if isAuthenticated();
+      
+      allow write: if isAuthenticated() && 
+                     isValidImageOrPDF() && 
+                     isUnder10MB();
+      
+      allow delete: if isAdmin();
+    }
+    
+    // Project photos
+    match /projects/{projectId}/{allPaths=**} {
+      // Anyone can read project photos
+      allow read: if true;
+      
+      // Only authenticated users can upload
+      allow write: if isAuthenticated() && 
+                     request.resource.contentType.matches('image/.*') && 
+                     isUnder10MB();
+      
+      allow delete: if isAdmin();
+    }
+    
+    // User profile photos
+    match /users/{userId}/profile/{fileName} {
+      allow read: if true;
+      
+      allow write: if isOwner(userId) && 
+                     request.resource.contentType.matches('image/.*') && 
+                     request.resource.size < 5 * 1024 * 1024;
+      
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+  }
+}

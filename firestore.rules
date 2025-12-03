@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isVerifier() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'verifier';
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Beneficiaries collection
+    match /beneficiaries/{beneficiaryId} {
+      // Anyone authenticated can read (for matching purposes)
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can create applications
+      allow create: if isAuthenticated() && 
+                      request.resource.data.userId == request.auth.uid &&
+                      request.resource.data.status == 'pending';
+      
+      // Owner can read their own application
+      allow get: if isAuthenticated() && 
+                   resource.data.userId == request.auth.uid;
+      
+      // Only admins and verifiers can update status
+      allow update: if (isAdmin() || isVerifier()) ||
+                       (isOwner(resource.data.userId) && 
+                        request.resource.data.status == resource.data.status);
+      
+      // Only admins can delete
+      allow delete: if isAdmin();
+    }
+    
+    // Donors collection
+    match /donors/{donorId} {
+      // Anyone authenticated can read
+      allow read: if isAuthenticated();
+      
+      // Authenticated users can register as donors
+      allow create: if isAuthenticated() && 
+                      request.resource.data.userId == request.auth.uid;
+      
+      // Owner or admin can update
+      allow update: if isOwner(resource.data.userId) || isAdmin();
+      
+      // Only admins can delete
+      allow delete: if isAdmin();
+    }
+    
+    // Pledges collection
+    match /pledges/{pledgeId} {
+      // Authenticated users can read pledges
+      allow read: if isAuthenticated();
+      
+      // Donors can create pledges
+      allow create: if isAuthenticated();
+      
+      // Admins can update/delete
+      allow update, delete: if isAdmin();
+    }
+    
+    // Projects collection
+    match /projects/{projectId} {
+      // Anyone can read projects
+      allow read: if true;
+      
+      // Only admins can create/update/delete projects
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Statistics collection (public read, admin write)
+    match /statistics/{statId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
