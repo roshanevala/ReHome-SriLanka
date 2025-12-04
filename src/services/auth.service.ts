@@ -11,7 +11,9 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
   PhoneAuthProvider,
-  signInWithCredential
+  signInWithCredential,
+  GoogleAuthProvider,
+  signInWithPopup
 } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
@@ -46,6 +48,13 @@ export class AuthService {
   // Email/Password Sign In
   async signIn(email: string, password: string): Promise<User> {
     const credential = await signInWithEmailAndPassword(this.auth, email, password);
+    return credential.user;
+  }
+
+  // Google Sign In
+  async signInWithGoogle(): Promise<User> {
+    const provider = new GoogleAuthProvider();
+    const credential = await signInWithPopup(this.auth, provider);
     return credential.user;
   }
 

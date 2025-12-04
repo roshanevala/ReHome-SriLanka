@@ -75,6 +75,20 @@ export class HomeComponent {
     }
   }
 
+  async onGoogleLogin() {
+    this.isLoading.set(true);
+    this.authError.set('');
+
+    try {
+      await this.authService.signInWithGoogle();
+      this.closeAuthModal();
+    } catch (error: any) {
+      this.authError.set(error.message || 'Google sign-in failed. Please try again.');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   async onSignup() {
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
