@@ -30,25 +30,25 @@
             </div>
           </div>
           <div>
-            <label for="name" class="block text-sm font-medium text-[#222222] mb-2">Name / Organisation Name</label>
+            <label for="name" class="block text-sm font-semibold text-[#222222] mb-2">Name / Organisation Name <span class="text-red-600 font-bold text-base">*</span></label>
             <input type="text" id="name" formControlName="name" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('name')">
           </div>
           @if (donorForm.get('donorType')?.value === 'Organisation') {
             <div>
-              <label for="contactPerson" class="block text-sm font-medium text-[#222222] mb-2">Contact Person</label>
+              <label for="contactPerson" class="block text-sm font-semibold text-[#222222] mb-2">Contact Person <span class="text-red-600 font-bold text-base">*</span></label>
               <input type="text" id="contactPerson" formControlName="contactPerson" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('contactPerson')">
             </div>
           }
           <div>
-            <label for="phone" class="block text-sm font-medium text-[#222222] mb-2">Phone / WhatsApp</label>
+            <label for="phone" class="block text-sm font-semibold text-[#222222] mb-2">Phone / WhatsApp <span class="text-red-600 font-bold text-base">*</span></label>
             <input type="tel" id="phone" formControlName="phone" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('phone')">
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-[#222222] mb-2">Email Address</label>
+            <label for="email" class="block text-sm font-semibold text-[#222222] mb-2">Email Address <span class="text-red-600 font-bold text-base">*</span></label>
             <input type="email" id="email" formControlName="email" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('email')">
           </div>
           <div>
-            <label for="country" class="block text-sm font-medium text-[#222222] mb-2">Country</label>
+            <label for="country" class="block text-sm font-semibold text-[#222222] mb-2">Country <span class="text-red-600 font-bold text-base">*</span></label>
             <input type="text" id="country" formControlName="country" class="block w-full px-4 py-3 rounded-md border-[#DDE2EB] shadow-sm focus:border-[#004B7A] focus:ring-[#004B7A] text-base" [class.border-red-500]="isInvalid('country')">
           </div>
         </div>
@@ -59,7 +59,7 @@
         <legend class="text-xl font-semibold text-[#004B7A] mb-4 px-2">2. Type of Support</legend>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-[#222222] mb-3">I can help by:</label>
+            <label class="block text-sm font-semibold text-[#222222] mb-3">I can help by: <span class="text-red-600 font-bold text-base">*</span></label>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#F6F7FB] p-4 rounded-md border border-[#DDE2EB]">
                 <div class="flex items-start"><div class="flex items-center h-5"><input id="st-full-house" formControlName="supportTypeFundFull" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-full-house" class="font-medium text-[#222222]">Funding a full house</label></div></div>
                 <div class="flex items-start"><div class="flex items-center h-5"><input id="st-part-house" formControlName="supportTypeFundPart" type="checkbox" class="h-5 w-5 text-[#004B7A] border-[#DDE2EB] rounded focus:ring-[#004B7A]"></div><div class="ml-3 text-sm"><label for="st-part-house" class="font-medium text-[#222222]">Funding part of a house</label></div></div>

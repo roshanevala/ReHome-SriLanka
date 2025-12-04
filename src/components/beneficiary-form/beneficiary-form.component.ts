@@ -50,7 +50,7 @@ export class BeneficiaryFormComponent {
     description: ['', Validators.required],
     damageLevel: ['Fully Destroyed', Validators.required],
     familyMembers: [1, [Validators.required, Validators.min(1)]],
-    familyComposition: ['', Validators.required],
+    familyComposition: [''],
     monthlyIncome: ['< LKR 30,000', Validators.required],
     hasLandDeed: [false, Validators.required],
     consentData: [false, Validators.requiredTrue],
