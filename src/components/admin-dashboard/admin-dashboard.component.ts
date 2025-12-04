@@ -131,6 +131,36 @@ export class AdminDashboardComponent implements OnInit {
     return documents.filter(doc => doc.type === type);
   }
 
+  formatTimestamp(timestamp: any): string {
+    if (!timestamp) return 'N/A';
+    
+    // Handle Firestore Timestamp object
+    if (timestamp?.seconds) {
+      const date = new Date(timestamp.seconds * 1000);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    // Handle ISO string
+    if (typeof timestamp === 'string') {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    return timestamp.toString();
+  }
+
   getStatusColor(status: ApplicationStatus): string {
     switch (status) {
       case 'Pending': return 'bg-yellow-100 text-yellow-800';

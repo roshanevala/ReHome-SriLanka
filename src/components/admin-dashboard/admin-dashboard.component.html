@@ -1,9 +1,9 @@
 
-<div class="bg-[#F6F7FB] min-h-screen p-6">
+<div class="bg-[#F6F7FB] min-h-screen p-3 md:p-6">
   <div class="max-w-7xl mx-auto">
-    <div class="bg-white p-6 rounded-xl shadow-lg">
-      <div class="flex justify-between items-center mb-6 border-b pb-4">
-        <h1 class="text-3xl font-bold text-[#004B7A]">Admin Dashboard</h1>
+    <div class="bg-white p-3 md:p-6 rounded-xl shadow-lg">
+      <div class="flex justify-between items-center mb-4 md:mb-6 border-b pb-3 md:pb-4">
+        <h1 class="text-xl md:text-3xl font-bold text-[#004B7A]">Admin Dashboard</h1>
       </div>
 
       @if (isLoading()) {
@@ -14,50 +14,50 @@
       } @else {
         <!-- Statistics Overview -->
         @if (activeTab() === 'overview') {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <div class="bg-gradient-to-br from-[#E4F0F7] to-white p-6 rounded-lg border border-[#DDE2EB]">
-              <h3 class="text-sm font-medium text-[#666666] mb-2">Total Applications</h3>
-              <p class="text-3xl font-bold text-[#004B7A]">{{ statistics().totalBeneficiaries }}</p>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-4 md:mb-6">
+            <div class="bg-gradient-to-br from-[#E4F0F7] to-white p-3 md:p-6 rounded-lg border border-[#DDE2EB]">
+              <h3 class="text-xs md:text-sm font-medium text-[#666666] mb-1 md:mb-2">Total Applications</h3>
+              <p class="text-xl md:text-3xl font-bold text-[#004B7A]">{{ statistics().totalBeneficiaries }}</p>
             </div>
-            <div class="bg-gradient-to-br from-[#FFF8E6] to-white p-6 rounded-lg border border-[#DDE2EB]">
-              <h3 class="text-sm font-medium text-[#666666] mb-2">Pending Review</h3>
-              <p class="text-3xl font-bold text-[#F7A800]">{{ statistics().pendingApplications }}</p>
+            <div class="bg-gradient-to-br from-[#FFF8E6] to-white p-3 md:p-6 rounded-lg border border-[#DDE2EB]">
+              <h3 class="text-xs md:text-sm font-medium text-[#666666] mb-1 md:mb-2">Pending Review</h3>
+              <p class="text-xl md:text-3xl font-bold text-[#F7A800]">{{ statistics().pendingApplications }}</p>
             </div>
-            <div class="bg-gradient-to-br from-green-50 to-white p-6 rounded-lg border border-[#DDE2EB]">
-              <h3 class="text-sm font-medium text-[#666666] mb-2">Approved</h3>
-              <p class="text-3xl font-bold text-green-600">{{ statistics().approvedApplications }}</p>
+            <div class="bg-gradient-to-br from-green-50 to-white p-3 md:p-6 rounded-lg border border-[#DDE2EB]">
+              <h3 class="text-xs md:text-sm font-medium text-[#666666] mb-1 md:mb-2">Approved</h3>
+              <p class="text-xl md:text-3xl font-bold text-green-600">{{ statistics().approvedApplications }}</p>
             </div>
-            <div class="bg-gradient-to-br from-[#E4F0F7] to-white p-6 rounded-lg border border-[#DDE2EB]">
-              <h3 class="text-sm font-medium text-[#666666] mb-2">Total Donors</h3>
-              <p class="text-3xl font-bold text-[#004B7A]">{{ statistics().totalDonors }}</p>
+            <div class="bg-gradient-to-br from-[#E4F0F7] to-white p-3 md:p-6 rounded-lg border border-[#DDE2EB]">
+              <h3 class="text-xs md:text-sm font-medium text-[#666666] mb-1 md:mb-2">Total Donors</h3>
+              <p class="text-xl md:text-3xl font-bold text-[#004B7A]">{{ statistics().totalDonors }}</p>
             </div>
-            <div class="bg-gradient-to-br from-purple-50 to-white p-6 rounded-lg border border-[#DDE2EB]">
-              <h3 class="text-sm font-medium text-[#666666] mb-2">Total Pledges</h3>
-              <p class="text-3xl font-bold text-purple-600">{{ statistics().totalPledges }}</p>
+            <div class="bg-gradient-to-br from-purple-50 to-white p-3 md:p-6 rounded-lg border border-[#DDE2EB] col-span-2 md:col-span-1">
+              <h3 class="text-xs md:text-sm font-medium text-[#666666] mb-1 md:mb-2">Total Pledges</h3>
+              <p class="text-xl md:text-3xl font-bold text-purple-600">{{ statistics().totalPledges }}</p>
             </div>
           </div>
         }
 
         <!-- Tabs -->
-        <div class="mb-6">
+        <div class="mb-4 md:mb-6 overflow-x-auto -mx-3 md:mx-0 px-3 md:px-0">
           <div class="border-b border-[#DDE2EB]">
-            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-              <button (click)="changeTab('overview')" [class]="activeTab() === 'overview' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+            <nav class="-mb-px flex space-x-2 md:space-x-6" aria-label="Tabs">
+              <button (click)="changeTab('overview')" [class]="activeTab() === 'overview' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-3 md:py-4 px-1 border-b-2 font-medium text-xs md:text-sm transition-colors">
                 Overview
               </button>
-              <button (click)="changeTab('pending')" [class]="activeTab() === 'pending' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+              <button (click)="changeTab('pending')" [class]="activeTab() === 'pending' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-3 md:py-4 px-1 border-b-2 font-medium text-xs md:text-sm transition-colors">
                 Pending
-                <span class="ml-2 inline-block py-0.5 px-2.5 rounded-full text-xs font-medium bg-[#F7A800] text-white">
+                <span class="ml-1 md:ml-2 inline-block py-0.5 px-1.5 md:px-2.5 rounded-full text-xs font-medium bg-[#F7A800] text-white">
                   {{ pendingApplications().length }}
                 </span>
               </button>
-              <button (click)="changeTab('approved')" [class]="activeTab() === 'approved' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+              <button (click)="changeTab('approved')" [class]="activeTab() === 'approved' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-3 md:py-4 px-1 border-b-2 font-medium text-xs md:text-sm transition-colors">
                 Approved
               </button>
-              <button (click)="changeTab('rejected')" [class]="activeTab() === 'rejected' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+              <button (click)="changeTab('rejected')" [class]="activeTab() === 'rejected' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-3 md:py-4 px-1 border-b-2 font-medium text-xs md:text-sm transition-colors">
                 Rejected
               </button>
-              <button (click)="changeTab('donors')" [class]="activeTab() === 'donors' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+              <button (click)="changeTab('donors')" [class]="activeTab() === 'donors' ? 'border-[#004B7A] text-[#004B7A]' : 'border-transparent text-[#666666] hover:text-[#004B7A] hover:border-[#DDE2EB]'" class="whitespace-nowrap py-3 md:py-4 px-1 border-b-2 font-medium text-xs md:text-sm transition-colors">
                 Donors
               </button>
             </nav>
@@ -66,7 +66,7 @@
 
         <!-- Content Area -->
         @if (activeTab() !== 'overview') {
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
             <div class="lg:col-span-1">
               @switch (activeTab()) {
                 @case ('pending') {
@@ -249,7 +249,7 @@
                       </div>
                       <div>
                         <h4 class="text-sm font-medium text-[#666666] mb-1">Registered On</h4>
-                        <p class="text-[#222222]">{{ donor.createdAt }}</p>
+                        <p class="text-[#222222]">{{ formatTimestamp(donor.createdAt) }}</p>
                       </div>
                     </div>
                   </div>
@@ -430,7 +430,7 @@
                       </div>
                       <div>
                         <h4 class="text-sm font-medium text-[#666666]">Submitted On</h4>
-                        <p class="text-[#222222]">{{ app.createdAt }}</p>
+                        <p class="text-[#222222]">{{ formatTimestamp(app.createdAt) }}</p>
                       </div>
                     </div>
                   </div>
