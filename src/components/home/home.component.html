@@ -11,6 +11,22 @@
       <p class="mt-6 text-lg md:text-xl text-[#666666] max-w-3xl mx-auto">
         A transparent platform connecting families who have lost their homes in disasters with the compassionate donors ready to help rebuild.
       </p>
+      
+      <!-- Direct Support Banner -->
+      <div class="mt-8 inline-block">
+        <div class="bg-gradient-to-r from-[#004B7A] to-[#003A5C] text-white px-6 py-3 rounded-full shadow-lg border-2 border-[#F7A800]">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-[#F7A800]" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="font-semibold text-sm md:text-base">No Middleman • No Fees • No Commissions</span>
+            <svg class="w-5 h-5 text-[#F7A800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+        </div>
+        <p class="text-sm text-[#666666] mt-2 italic">Just direct support from your heart to their home</p>
+      </div>
 
       @if (currentUser$ | async; as user) {
         <!-- Logged in user -->
