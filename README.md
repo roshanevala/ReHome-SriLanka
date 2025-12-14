@@ -126,15 +126,13 @@ Notes:
 
 ## 📖 Documentation
 
-Comprehensive documentation is available in the `/docs` folder:
+Short, essential docs live in `/docs`:
 
 - [Project Overview](docs/1-PROJECT-OVERVIEW.md)
-- [Data Requirements](docs/2-DATA-REQUIREMENTS.md)
-- [Verification Process](docs/3-VERIFICATION-PROCESS.md)
+- [Firebase Setup](docs/10-FIREBASE-SETUP.md)
 - [Database Schema](docs/5-DATABASE-SCHEMA.md)
-- [User Roles & Permissions](docs/6-USER-ROLES-PERMISSIONS.md)
+- [User Roles](docs/6-USER-ROLES-PERMISSIONS.md)
 - [Security & Privacy](docs/7-SECURITY-PRIVACY.md)
-- [Firebase Setup Guide](docs/10-FIREBASE-SETUP.md)
 
 ## 🎯 Use Cases
 
