@@ -56,6 +56,9 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Firebase Admin
+# Firebase Admin & Secrets
 serviceAccountKey.json
-set-admin.js
+**/serviceAccount*.json
+.env
+.env.local
+.env.*.local
