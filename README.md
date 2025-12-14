@@ -104,11 +104,25 @@ ReBuild Homes SriLanka is a transparent, verification-based platform that connec
 
 ### Setting Up Admin Access
 
-To set an admin user, use the provided script:
+Use the hardened admin utility to grant `admin=true` custom claims:
 
 ```bash
-node set-admin.js your-user-email@example.com
+# 1) Point to your service account JSON (do NOT commit it)
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.configs/firebase/rehome-admin.json"
+
+# 2) Optionally set your project id (will be inferred from creds otherwise)
+export FIREBASE_PROJECT_ID="your-project-id"
+
+# 3) Preview (dry run)
+node scripts/set-admin.mjs user@example.com --dry-run
+
+# 4) Apply change (requires --confirm)
+node scripts/set-admin.mjs user@example.com --confirm
 ```
+
+Notes:
+- The user must reauthenticate (sign out/in) to refresh tokens after claims change.
+- Store your service account securely outside the repo.
 
 ## 📖 Documentation
 
