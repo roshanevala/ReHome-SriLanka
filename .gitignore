@@ -62,3 +62,7 @@ serviceAccountKey.json
 .env
 .env.local
 .env.*.local
+
+# Environment configuration files with credentials
+src/environments/environment.ts
+src/environments/environment.prod.ts

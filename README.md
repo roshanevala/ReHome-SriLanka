@@ -54,85 +54,50 @@ ReBuild Homes SriLanka is a transparent, verification-based platform that connec
 - npm or yarn
 - Firebase account
 
-### Installation
+### Quick Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/roshanevala/ReHome-SriLanka.git
-   cd ReHome-SriLanka
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Firebase**
-   - Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication (Email/Password)
-   - Create a Firestore database
-   - Enable Storage
-   - Copy your Firebase configuration
-
-4. **Configure environment**
-   - Update `src/environments/environment.ts` with your Firebase config:
-   ```typescript
-   export const environment = {
-     production: false,
-     firebase: {
-       apiKey: "your-api-key",
-       authDomain: "your-auth-domain",
-       projectId: "your-project-id",
-       storageBucket: "your-storage-bucket",
-       messagingSenderId: "your-messaging-sender-id",
-       appId: "your-app-id"
-     }
-   };
-   ```
-
-5. **Deploy Firestore rules and indexes**
-   ```bash
-   firebase deploy --only firestore:rules
-   firebase deploy --only firestore:indexes
-   ```
-
-6. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-   Navigate to `http://localhost:4200/`
-
-### Setting Up Admin Access
-
-Use the hardened admin utility to grant `admin=true` custom claims:
+For detailed setup instructions, see our **[📖 Setup Guide](SETUP.md)**.
 
 ```bash
-# 1) Point to your service account JSON (do NOT commit it)
-export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.configs/firebase/rehome-admin.json"
+# Clone repository
+git clone https://github.com/roshanevala/ReHome-SriLanka.git
+cd ReHome-SriLanka
 
-# 2) Optionally set your project id (will be inferred from creds otherwise)
-export FIREBASE_PROJECT_ID="your-project-id"
+# Install dependencies
+npm install
 
-# 3) Preview (dry run)
-node scripts/set-admin.mjs user@example.com --dry-run
+# Copy environment templates
+cp src/environments/environment.ts.example src/environments/environment.ts
+cp src/environments/environment.prod.ts.example src/environments/environment.prod.ts
 
-# 4) Apply change (requires --confirm)
-node scripts/set-admin.mjs user@example.com --confirm
+# Add your Firebase config to environment.ts
+# Then run the dev server
+npm run dev
 ```
 
-Notes:
-- The user must reauthenticate (sign out/in) to refresh tokens after claims change.
-- Store your service account securely outside the repo.
+Visit `http://localhost:4200/` to see the app running!
 
 ## 📖 Documentation
 
-Short, essential docs live in `/docs`:
+Comprehensive documentation is available in the [`/docs`](docs/) directory:
 
-- [Project Overview](docs/1-PROJECT-OVERVIEW.md)
-- [Firebase Setup](docs/10-FIREBASE-SETUP.md)
-- [Database Schema](docs/5-DATABASE-SCHEMA.md)
-- [User Roles](docs/6-USER-ROLES-PERMISSIONS.md)
-- [Security & Privacy](docs/7-SECURITY-PRIVACY.md)
+### Essential Guides
+- **[🚀 Setup Guide](SETUP.md)** - Step-by-step installation instructions
+- **[💻 Development Guide](docs/DEVELOPMENT.md)** - Developer reference and best practices
+- **[🚢 Deployment Guide](docs/DEPLOYMENT.md)** - Production deployment instructions
+- **[🔒 Security Policy](SECURITY.md)** - Security best practices and vulnerability reporting
+
+### Project Documentation
+- **[Project Overview](docs/1-PROJECT-OVERVIEW.md)** - System architecture and features
+- **[Firebase Setup](docs/10-FIREBASE-SETUP.md)** - Detailed Firebase configuration
+- **[Database Schema](docs/5-DATABASE-SCHEMA.md)** - Firestore data structure
+- **[User Roles & Permissions](docs/6-USER-ROLES-PERMISSIONS.md)** - Access control system
+- **[Security & Privacy](docs/7-SECURITY-PRIVACY.md)** - Data protection measures
+- **[API Specification](docs/8-API-SPECIFICATION.md)** - Service interfaces
+- **[Implementation Roadmap](docs/9-IMPLEMENTATION-ROADMAP.md)** - Development phases
+
+### Scripts & Tools
+- **[Scripts Documentation](scripts/README.md)** - Admin utility scripts guide
 
 ## 🎯 Use Cases
 
@@ -149,6 +114,45 @@ This platform can be adapted for:
 We welcome contributions from the community! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+### Quick Start for Contributors
+1. Check our [Setup Guide](SETUP.md) for detailed installation instructions
+2. Read the [Contributing Guidelines](CONTRIBUTING.md)
+3. Browse [existing issues](https://github.com/roshanevala/ReHome-SriLanka/issues) or create a new one
+4. Fork the repository and create your feature branch
+5. Submit a pull request with a clear description of your changes
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Build fails after cloning**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Firebase connection errors**
+- Verify your Firebase config in `src/environments/environment.ts`
+- Ensure Firestore rules are deployed: `firebase deploy --only firestore:rules`
+- Check that all Firebase services (Auth, Firestore, Storage) are enabled
+
+**Environment file errors**
+- Copy the `.example` files: `cp src/environments/environment.ts.example src/environments/environment.ts`
+- Fill in your Firebase credentials from Firebase Console
+- Ensure no trailing commas or syntax errors in the config
+
+**Admin dashboard not accessible**
+- Run the admin setup script: `node scripts/set-admin.mjs your@email.com --confirm`
+- Sign out and sign back in to refresh your token
+- See [scripts/README.md](scripts/README.md) for detailed admin setup instructions
+
+**Port 4200 already in use**
+```bash
+ng serve --port 4300
+```
+
+For more troubleshooting help, see [SETUP.md](SETUP.md) or [create an issue](https://github.com/roshanevala/ReHome-SriLanka/issues/new/choose).
 
 ## 📝 License
 

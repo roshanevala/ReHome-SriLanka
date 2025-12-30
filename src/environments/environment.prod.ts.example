@@ -1,5 +1,5 @@
 // Production environment configuration
-// Copy environment.prod.ts.example to create this file and add your Firebase credentials
+// Copy this file to environment.prod.ts and fill in your Firebase project details
 export const environment = {
   production: true,
   firebase: {
